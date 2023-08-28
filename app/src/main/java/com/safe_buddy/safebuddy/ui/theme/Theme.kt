@@ -16,25 +16,37 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = primaryDark,
+    onPrimary = onPrimaryDark,
+    primaryContainer = primaryContainerDark,
+    onPrimaryContainer = onPrimaryContainerDark,
+
+    secondary = secondaryDark,
+    onSecondary = onSecondaryDark,
+    secondaryContainer = onSecondaryContainerDark,
+    onSecondaryContainer = onSecondaryContainerDark,
+
+    tertiary = tertiaryDark,
+    onTertiary = onTertiaryDark,
+    tertiaryContainer = onTertiaryContainerDark,
+    onTertiaryContainer = onTertiaryContainerDark,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = primaryLight,
+    onPrimary = onPrimaryLight,
+    primaryContainer = primaryContainerLight,
+    onPrimaryContainer = onPrimaryContainerLight,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    secondary = secondaryLight,
+    onSecondary = onSecondaryLight,
+    secondaryContainer = onSecondaryContainerLight,
+    onSecondaryContainer = onSecondaryContainerLight,
+
+    tertiary = tertiaryLight,
+    onTertiary = onTertiaryLight,
+    tertiaryContainer = onTertiaryContainerLight,
+    onTertiaryContainer = onTertiaryContainerLight,
 )
 
 @Composable
