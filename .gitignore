@@ -11,3 +11,11 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+/build
+.idea/
+*.iml
+*.kotlin_module
+
+# Firebase build files
+app/google-services.json
