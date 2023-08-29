@@ -4,7 +4,8 @@ data class SignInPageStateModel(
     val email: String = "",
     val password: String = "",
     val isSignInBtnLoading: Boolean = false,
-    val isGoogleBtnLoading: Boolean = false,
+    val isSuccessful: Boolean = false,
+    val signInError: String? = null
 )
 
 data class RegisterPageStateModel(
@@ -13,5 +14,5 @@ data class RegisterPageStateModel(
     val email: String = "",
     val password: String = "",
     val isSignInBtnLoading: Boolean = false,
-    val isGoogleBtnLoading: Boolean = false,
+    val signInError: String? = null
 )
