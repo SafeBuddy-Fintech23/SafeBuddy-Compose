@@ -12,10 +12,6 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,18 +23,14 @@ import com.safe_buddy.safebuddy.R
 
 @Composable
 fun GoogleSignInButton(
-    modifier: Modifier
+    modifier: Modifier,
+    isLoading: Boolean = false,
+    onClick: () -> Unit,
 ) {
-    var isLoading by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     ElevatedButton(
         modifier = modifier,
-        onClick = {
-            isLoading = !isLoading
-            /*TODO*/
-        }) {
+        onClick = onClick
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
@@ -66,5 +58,9 @@ fun GoogleSignInButton(
 @Preview(showBackground = true)
 @Composable
 fun GoogleSignInButtonPreview() {
-    GoogleSignInButton(modifier = Modifier)
+    GoogleSignInButton(
+        modifier = Modifier,
+        isLoading = false,
+        onClick = {}
+    )
 }

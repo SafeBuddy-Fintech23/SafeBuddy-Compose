@@ -72,7 +72,7 @@ fun SafeBuddyTheme(
                 colorScheme.surface.toArgb() // surface becomes the the status bar color
 
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                !darkTheme // not darkTheme makes ith status bar icons visible
+                !darkTheme // not darkTheme makes the status bar icons visible
         }
     }
 
