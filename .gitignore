@@ -12,8 +12,11 @@ key.properties
 **/*.keystore
 **/*.jks
 
+app/build
 /build
+/build/reports/configuration-cache/69ptd1sp3e0fucqq5vde5x6k2/1p7k3atm4a9cb0ouu6zborodl/configuration-cache-report.html
 .idea/
+.idea/deploymentTargetDropDown.xml
 *.iml
 *.kotlin_module
 
