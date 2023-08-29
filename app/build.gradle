@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -59,6 +60,20 @@ dependencies {
 
     // Compose view model
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
+    // Navigation
+    implementation 'androidx.navigation:navigation-compose:2.7.1'
+    // Coil Image loader
+    implementation 'io.coil-kt:coil-compose:2.4.0'
+
+    // BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+
+    // AUTHENTICATION
+    // Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    // Google Play services library
+    implementation 'com.google.android.gms:play-services-auth:20.6.0'
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
