@@ -53,8 +53,7 @@ private val LightColorScheme = lightColorScheme(
 fun SafeBuddyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    dynamicColor: Boolean = true, content: @Composable () -> Unit
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -69,14 +68,15 @@ fun SafeBuddyTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            window?.statusBarColor =
+                colorScheme.surface.toArgb() // surface becomes the the status bar color
+
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                !darkTheme // not darkTheme makes ith status bar icons visible
         }
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+        colorScheme = colorScheme, typography = Typography, content = content
     )
 }
