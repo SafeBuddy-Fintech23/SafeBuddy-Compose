@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,12 +21,17 @@ fun CustomOutlinedTextField(
     onValueChange: (String) -> Unit = {},
     label: String = "",
     errorText: String = "",
+    singleLine: Boolean = true,
+    minLines: Int = 1,
+    maxLines: Int = 1,
     showError: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
+    autoCorrect: Boolean = false,
     onDone: (KeyboardActionScope.() -> Unit)? = null,
     onNext: (KeyboardActionScope.() -> Unit)? = null,
-    leadingIcon: @Composable() (() -> Unit)? = null,
-    trailingIcon: @Composable() (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
 ) {
 
     OutlinedTextField(
@@ -35,16 +41,19 @@ fun CustomOutlinedTextField(
         label = {
             Text(text = label)
         },
-        singleLine = true,
+        singleLine = singleLine,
+        minLines = minLines,
+        maxLines = maxLines,
         isError = showError,
         supportingText = if (showError) {
             { Text(text = errorText) }
         } else null,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
+        shape = MaterialTheme.shapes.medium,
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            autoCorrect = false,
+            keyboardType = keyboardType,
+            autoCorrect = autoCorrect,
             imeAction = imeAction,
         ),
         keyboardActions = KeyboardActions(
