@@ -212,7 +212,7 @@ fun PageHeader() = Column(horizontalAlignment = Alignment.CenterHorizontally) {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_round),
         contentDescription = null,
-        modifier = Modifier.size(200.dp),
+        modifier = Modifier.size(160.dp),
         contentScale = ContentScale.Fit
     )
     Spacer(modifier = Modifier.height(16.dp))

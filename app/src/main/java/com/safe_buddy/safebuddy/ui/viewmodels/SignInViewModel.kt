@@ -86,4 +86,40 @@ class SignInViewModel : ViewModel() {
         }
 
     }
+
+    fun registerWithEmailPassword() {
+        val email = uiState.value.email
+        val password = uiState.value.password
+
+        if (email.length < 6 && password.length < 6) {
+            showEmailError = true
+            showPasswordError = true
+        } else {
+            showEmailError = false
+            showPasswordError = false
+
+            _uiState.update { it.copy(isSignInBtnLoading = true, signInError = null) }
+
+            FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        // on updating the UI state, user will be navigated automatically to the HomeScreen
+                        _uiState.update { currentState -> currentState.copy(isSuccessful = true) }
+                    }
+                    if (it.isCanceled) {
+                        _uiState.update { currentState ->
+                            currentState.copy(signInError = "Registration cancelled. Please try again later")
+                        }
+                    }
+                }.addOnFailureListener {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            signInError = it.message, // A Toast will show this error
+                            isSignInBtnLoading = false,
+                        )
+                    }
+                }
+        }
+
+    }
 }
