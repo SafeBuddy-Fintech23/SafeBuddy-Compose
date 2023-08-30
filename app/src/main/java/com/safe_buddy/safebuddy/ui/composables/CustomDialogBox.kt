@@ -14,17 +14,30 @@ fun CustomDialogBox(
     icon: (@Composable () -> Unit)?,
     title: String?,
     text: String?,
-    confirmButtonText: String,
+    confirmButtonText: String?,
     dismissButtonText: String?,
-
-    ) {
+    onConfirmClick: (() -> Unit)?,
+    onDismissClick: (() -> Unit)?,
+) {
     AlertDialog(
         icon = icon,
         title = { if (title != null) Text(text = title) },
         text = { if (text != null) Text(text = text) },
         onDismissRequest = { /*an empty lambda prevents user from dismissing dialog by clicking outside*/ },
-        confirmButton = { TextButton(onClick = { }) { Text(text = confirmButtonText) } },
-        dismissButton = { if (dismissButtonText != null) TextButton(onClick = { }) { Text(text = dismissButtonText) } }
+        confirmButton = {
+            if (confirmButtonText != null) TextButton(onClick = onConfirmClick!!) {
+                Text(
+                    text = confirmButtonText
+                )
+            }
+        },
+        dismissButton = {
+            if (dismissButtonText != null) TextButton(onClick = onDismissClick!!) {
+                Text(
+                    text = dismissButtonText
+                )
+            }
+        }
     )
 }
 
@@ -39,5 +52,7 @@ fun CustomDialogBoxPreview() {
         text = "An email containing password reset link has been sent to your email address.",
         confirmButtonText = "Okay",
         dismissButtonText = null,
+        onConfirmClick = { },
+        onDismissClick = { },
     )
 }
