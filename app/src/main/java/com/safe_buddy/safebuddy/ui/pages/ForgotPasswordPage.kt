@@ -31,6 +31,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -102,7 +104,11 @@ fun ForgotPasswordPage(navController: NavHostController, viewModel: SignInViewMo
                                 contentDescription = stringResource(R.string.send)
                             )
                         }
-                    })
+                    },
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Done,
+                    onDone = { viewModel.sendPasswordResetLink() }
+                )
 
                 if (viewModel.showDialogEmailSent) {
                     CustomDialogBox(

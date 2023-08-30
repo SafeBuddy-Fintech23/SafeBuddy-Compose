@@ -39,6 +39,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -131,6 +133,8 @@ fun SignInPage(
                 label = "Email",
                 errorText = viewModel.emailErrorText,
                 showError = viewModel.showEmailError,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
             )
             Spacer(modifier = Modifier.height(8.dp))
             PasswordTextField(
