@@ -107,7 +107,51 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Routes.RegisterPage.name) {
-                            RegisterPage(navController = navController)
+                            val viewModel = viewModel<SignInViewModel>()
+                            val uiState = viewModel.uiState.collectAsState()
+
+                            val launcher = rememberLauncherForActivityResult(
+                                contract = ActivityResultContracts.StartIntentSenderForResult(),
+                                onResult = {
+                                    if (it.resultCode == RESULT_OK) {
+                                        lifecycleScope.launch {
+                                            val signInResult = googleAuthUiClient.signInByIntent(
+                                                intent = it.data ?: return@launch
+                                            )
+                                            viewModel.onSignInResult(signInResult)
+                                        }
+                                    }
+                                }
+                            )
+
+                            LaunchedEffect(key1 = uiState.value.isSuccessful, block = {
+                                if (uiState.value.isSuccessful) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Registration Successful",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                    navController.navigate(Routes.HomeScreen.name) {
+                                        launchSingleTop = true
+                                        popUpTo(route = Routes.RegisterPage.name) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            })
+
+                            RegisterPage(navController,
+                                viewModel = viewModel, onSignInWithGoogle = {
+                                    lifecycleScope.launch {
+                                        val signInIntentSender = googleAuthUiClient.signIn()
+                                        launcher.launch(
+                                            IntentSenderRequest.Builder(
+                                                signInIntentSender ?: return@launch
+                                            ).build()
+                                        )
+                                    }
+                                })
                         }
 
                         composable(Routes.HomeScreen.name) {
@@ -122,7 +166,7 @@ class MainActivity : ComponentActivity() {
 
                                     navController.navigate(Routes.SignInPage.name) {
                                         launchSingleTop = true
-                                        popUpTo(route = Routes.SignInPage.name) {
+                                        popUpTo(route = Routes.HomeScreen.name) {
                                             inclusive = true
                                         }
                                     }
