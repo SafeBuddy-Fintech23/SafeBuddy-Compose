@@ -4,7 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.safe_buddy.safebuddy.ui.models.SignInPageStateModel
 import com.safe_buddy.safebuddy.ui.sign_in_with_google.GoogleSignInResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,12 +35,12 @@ class SignInViewModel : ViewModel() {
 
     fun updateEmailText(value: String) {
         showEmailError = false
-        _uiState.update { currentSate -> currentSate.copy(email = value) }
+        _uiState.update { it.copy(email = value) }
     }
 
     fun updatePasswordText(value: String) {
         showPasswordError = false
-        _uiState.update { currentSate -> currentSate.copy(password = value) }
+        _uiState.update { it.copy(password = value) }
     }
 
     fun onSignInResult(result: GoogleSignInResult) {
@@ -64,7 +65,7 @@ class SignInViewModel : ViewModel() {
 
             _uiState.update { it.copy(isSignInBtnLoading = true, signInError = null) }
 
-            FirebaseAuth.getInstance()
+            Firebase.auth
                 .signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
                         // on updating the UI state, user will be navigated automatically to the HomeScreen
@@ -100,7 +101,7 @@ class SignInViewModel : ViewModel() {
 
             _uiState.update { it.copy(isSignInBtnLoading = true, signInError = null) }
 
-            FirebaseAuth.getInstance()
+            Firebase.auth
                 .createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
                         // on updating the UI state, user will be navigated automatically to the HomeScreen
@@ -121,5 +122,38 @@ class SignInViewModel : ViewModel() {
                 }
         }
 
+    }
+
+    var showDialogEmailSent by mutableStateOf(false)
+    fun sendPasswordResetLink() {
+        val email = uiState.value.email
+
+        if (email.length < 6)
+            showEmailError = true
+        else {
+            _uiState.update {
+                it.copy(isSignInBtnLoading = true)
+            }
+
+            Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    resetState()
+                    showDialogEmailSent = true
+                }
+                if (it.isCanceled) {
+                    _uiState.update { currentState ->
+                        currentState.copy(signInError = "Sign in cancelled. Please try again later")
+                    }
+                }
+            }.addOnFailureListener {
+                showDialogEmailSent = true
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        signInError = it.message, // A Toast will show this error
+                        isSignInBtnLoading = false,
+                    )
+                }
+            }
+        }
     }
 }

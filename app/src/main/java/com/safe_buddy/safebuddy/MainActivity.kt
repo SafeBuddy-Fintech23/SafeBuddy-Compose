@@ -175,7 +175,10 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Routes.ForgotPasswordPage.name) {
-                            ForgotPasswordPage(navController = navController)
+                            ForgotPasswordPage(
+                                navController = navController,
+                                viewModel = viewModel<SignInViewModel>()
+                            )
                         }
                     }
                 }
