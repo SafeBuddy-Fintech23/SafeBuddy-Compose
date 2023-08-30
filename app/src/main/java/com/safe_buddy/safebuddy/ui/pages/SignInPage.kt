@@ -112,10 +112,7 @@ fun SignInPage(
                         .padding(horizontal = 4.dp)
                         .clickable {
                             navController.navigate(Routes.RegisterPage.name) {
-                                launchSingleTop = true
-                                popUpTo(route = Routes.SignInPage.name) {
-                                    inclusive = true
-                                }
+                                navController.popBackStack()
                             }
                         },
                 )
