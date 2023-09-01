@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.safe_buddy.safebuddy.ui.Routes
 import com.safe_buddy.safebuddy.ui.pages.ForgotPasswordPage
 import com.safe_buddy.safebuddy.ui.pages.HomeScreen
+import com.safe_buddy.safebuddy.ui.pages.ProfilePage
 import com.safe_buddy.safebuddy.ui.pages.RegisterPage
 import com.safe_buddy.safebuddy.ui.pages.SignInPage
 import com.safe_buddy.safebuddy.ui.sign_in_with_google.GoogleAuthUiClient
@@ -52,7 +53,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
@@ -183,6 +183,13 @@ class MainActivity : ComponentActivity() {
                             ForgotPasswordPage(
                                 navController = navController,
                                 viewModel = viewModel<SignInViewModel>()
+                            )
+                        }
+
+                        composable(Routes.ProfilePage.name) {
+
+                            ProfilePage(
+                                navController = navController,
                             )
                         }
                     }

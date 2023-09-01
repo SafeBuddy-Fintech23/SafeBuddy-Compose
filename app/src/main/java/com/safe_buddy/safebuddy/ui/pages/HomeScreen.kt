@@ -54,24 +54,30 @@ fun HomeScreen(
     Log.d("USER PHOTO URL", "url is:" + uiState.value.photoUrl.toString())
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        HomeScreenTopBar(title = uiState.value.userName ?: "SafeBuddy", navigationIcon = {
-            uiState.value.photoUrl?.let {
-                CircleUrlImage(
-                    imageUrl = it
-                )
-            }
-        }, onClickNavigationIcon = {/*TODO*/ }, actions = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Outlined.ShoppingCart, contentDescription = "options"
-                )
-            }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Outlined.Notifications, contentDescription = "options"
-                )
-            }
-        })
+        HomeScreenTopBar(
+            title = uiState.value.userName ?: "SafeBuddy",
+            navigationIcon = {
+                uiState.value.photoUrl?.let {
+                    CircleUrlImage(
+                        imageUrl = it
+                    )
+                }
+            },
+            onClickNavigationIcon = { navController.navigate(Routes.ProfilePage.name) },
+            actions = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.ShoppingCart,
+                        contentDescription = "options"
+                    )
+                }
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = "options"
+                    )
+                }
+            })
     },
         bottomBar = {
             HomeScreenBottomBar(

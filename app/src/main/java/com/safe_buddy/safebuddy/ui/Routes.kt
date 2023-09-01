@@ -11,4 +11,8 @@ sealed class Routes(val name: String) {
     object ShopPage : Routes("shop_page")
     object PaymentPage : Routes("payment_page")
     object MorePage : Routes("more_page")
+
+    // other pages
+    object  ProfilePage : Routes("profile_page")
+
 }
