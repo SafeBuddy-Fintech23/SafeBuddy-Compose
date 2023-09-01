@@ -6,6 +6,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,14 +20,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.safe_buddy.safebuddy.R
 
 @Composable
 fun PasswordTextField(
@@ -66,10 +66,10 @@ fun PasswordTextField(
         trailingIcon = {
             IconButton(onClick = { showPassword = !showPassword }) {
                 Icon(
-                    painter = painterResource(
-                        id = if (showPassword) R.drawable.outline_visibility_off_24
-                        else R.drawable.outline_visibility_24
-                    ), contentDescription = if (showPassword) "hide password"
+
+                    if (showPassword) Icons.Outlined.VisibilityOff
+                    else Icons.Outlined.Visibility,
+                    contentDescription = if (showPassword) "hide password"
                     else "show password"
                 )
             }
