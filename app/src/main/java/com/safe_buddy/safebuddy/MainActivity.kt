@@ -27,6 +27,7 @@ import com.safe_buddy.safebuddy.ui.pages.RegisterPage
 import com.safe_buddy.safebuddy.ui.pages.SignInPage
 import com.safe_buddy.safebuddy.ui.sign_in_with_google.GoogleAuthUiClient
 import com.safe_buddy.safebuddy.ui.theme.SafeBuddyTheme
+import com.safe_buddy.safebuddy.ui.viewmodels.HomeScreenViewModel
 import com.safe_buddy.safebuddy.ui.viewmodels.SignInViewModel
 import kotlinx.coroutines.launch
 
@@ -155,7 +156,11 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Routes.HomeScreen.name) {
-                            HomeScreen(navController = navController, onSignOut = {
+                            val viewModel = viewModel<HomeScreenViewModel>()
+                            HomeScreen(
+                                navController = navController,
+                                viewModel = viewModel
+                            ) {
                                 lifecycleScope.launch {
                                     googleAuthUiClient.signOut()
                                     Toast.makeText(
@@ -171,7 +176,7 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
                                 }
-                            })
+                            }
                         }
 
                         composable(Routes.ForgotPasswordPage.name) {

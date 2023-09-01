@@ -1,4 +1,4 @@
-package com.safe_buddy.safebuddy.ui.models
+package com.safe_buddy.safebuddy.ui.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
