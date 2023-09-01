@@ -1,14 +1,9 @@
 package com.safe_buddy.safebuddy.ui.pages
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -28,31 +23,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.safe_buddy.safebuddy.ui.Routes
 import com.safe_buddy.safebuddy.ui.models.BottomNavItem
 
 @Composable
 fun HomeScreen(navController: NavHostController, onSignOut: () -> Unit) {
+
+
+    val bottomNavController = rememberNavController()
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         HomeScreenTopBar(title = "username", navigationIcon = {
             Icon(
                 imageVector = Icons.Outlined.AccountCircle, contentDescription = "profile"
             )
-        }, onClickNavigationIcon = {}, actions = {
+        }, onClickNavigationIcon = {/*TODO*/ }, actions = {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
                     imageVector = Icons.Outlined.ShoppingCart, contentDescription = "options"
@@ -69,42 +65,61 @@ fun HomeScreen(navController: NavHostController, onSignOut: () -> Unit) {
             HomeScreenBottomBar(
                 bottomNavItems = listOf(
                     BottomNavItem(
+                        route = Routes.HomePage.name,
                         title = "Home",
                         selectedIcon = Icons.Default.Home,
                         unselectedIcon = Icons.Outlined.Home,
                     ),
                     BottomNavItem(
+                        route = Routes.ShopPage.name,
                         title = "Shop",
                         selectedIcon = Icons.Default.Store,
                         unselectedIcon = Icons.Outlined.Store,
                     ),
                     BottomNavItem(
+                        route = Routes.PaymentPage.name,
                         title = "Payment",
                         selectedIcon = Icons.Default.Payments,
                         unselectedIcon = Icons.Outlined.Payments,
                     ),
                     BottomNavItem(
+                        route = Routes.MorePage.name,
                         title = "More",
                         selectedIcon = Icons.Default.Menu,
                         unselectedIcon = Icons.Outlined.MoreVert,
                     ),
                 ),
+                navController = bottomNavController,
+                onItemClick = {
+                    bottomNavController.navigate(it.route) {
+                        bottomNavController.popBackStack() // to allow user to close the app on navigating back
+                    }
+                }
             )
         }
     ) {
-        Column(
+        Box(
             Modifier
                 .padding(it)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            Arrangement.Center,
-            Alignment.CenterHorizontally
         ) {
-            Text(text = "Home Screen")
-            Spacer(modifier = Modifier.height(16.dp))
-            OutlinedButton(onClick = onSignOut) {
-                Text(text = "Sign out")
+            NavHost(navController = bottomNavController, startDestination = Routes.HomePage.name) {
+                composable(Routes.HomePage.name) {
+                    HomePage()
+                }
+                composable(Routes.ShopPage.name) {
+                    ShopPage()
+                }
+                composable(Routes.PaymentPage.name) {
+                    PaymentPage()
+                }
+                composable(Routes.MorePage.name) {
+                    MorePage()
+                }
+
             }
+
+
         }
     }
 }
@@ -151,19 +166,21 @@ fun HomeScreenTopBarPreview() {
 @Composable
 fun HomeScreenBottomBar(
     bottomNavItems: List<BottomNavItem>,
+    navController: NavHostController,
+    onItemClick: (BottomNavItem) -> Unit,
 ) {
 
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
+
+    val backStackEntry = navController.currentBackStackEntryAsState()
+
 
     NavigationBar {
         bottomNavItems.forEachIndexed { index, bottomNavItem ->
+            val isSelected = bottomNavItem.route == backStackEntry.value?.destination?.route
             NavigationBarItem(
-                selected = selectedItemIndex == index,
+                selected = isSelected,
                 onClick = {
-                    selectedItemIndex = index
-                    // navController.navigate()
+                    onItemClick(bottomNavItem)
                 },
                 icon = {
                     BadgedBox(badge = {
@@ -179,7 +196,7 @@ fun HomeScreenBottomBar(
 
                     }) {
                         Icon(
-                            imageVector = if (selectedItemIndex == index) bottomNavItem.selectedIcon
+                            imageVector = if (isSelected) bottomNavItem.selectedIcon
                             else bottomNavItem.unselectedIcon,
                             contentDescription = bottomNavItem.title
                         )
@@ -197,26 +214,30 @@ fun HomeScreenBottomBarPreview() {
     HomeScreenBottomBar(
         bottomNavItems = listOf(
             BottomNavItem(
+                route = Routes.HomePage.name,
                 title = "Home",
                 selectedIcon = Icons.Default.Home,
                 unselectedIcon = Icons.Outlined.Home,
             ),
             BottomNavItem(
+                route = Routes.ShopPage.name,
                 title = "Shop",
                 selectedIcon = Icons.Default.Store,
                 unselectedIcon = Icons.Outlined.Store,
             ),
             BottomNavItem(
+                route = Routes.PaymentPage.name,
                 title = "Payment",
                 selectedIcon = Icons.Default.Payments,
                 unselectedIcon = Icons.Outlined.Payments,
             ),
             BottomNavItem(
+                route = Routes.MorePage.name,
                 title = "More",
                 selectedIcon = Icons.Default.Menu,
                 unselectedIcon = Icons.Outlined.MoreVert,
             ),
-        ),
-
-        )
+        ), navController = rememberNavController(),
+        onItemClick = {}
+    )
 }
