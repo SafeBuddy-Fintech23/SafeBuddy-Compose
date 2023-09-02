@@ -1,13 +1,20 @@
 package com.safe_buddy.safebuddy.ui.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
@@ -30,18 +37,38 @@ fun PaymentListItem(
     name: String = "Item Name Item Name",
     daysLeft: Int = 25,
     isDue: Boolean = false,
+    paymentProgress: Float = 0.5f
 ) {
-    ListItem(
-        overlineContent = { Text(text = "$$price") },
-        leadingContent = { ItemLeadingImage() },
-        headlineContent = { Text(text = name) },
-        supportingContent = {
-            Text(
-                text = "$daysLeft days left", color = if (isDue) MaterialTheme.colorScheme.error
-                else MaterialTheme.colorScheme.primary
-            )
-        },
-    )
+    Card(
+        modifier = Modifier.padding(
+            vertical = 4.dp,
+            horizontal = 8.dp
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.secondary
+        ),
+    ) {
+        ListItem(
+            overlineContent = { Text(text = "$$price") },
+            leadingContent = { ItemLeadingImage() },
+            headlineContent = { Text(text = name) },
+            supportingContent = {
+                Text(
+                    text = "$daysLeft days left", color = if (isDue) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.primary
+                )
+            },
+            trailingContent = {
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Pay")
+                }
+            },
+        )
+        Row {
+            LinearProgressIndicator(progress = paymentProgress, modifier = Modifier.fillMaxWidth())
+        }
+    }
 }
 
 @Preview(showBackground = true)
