@@ -40,6 +40,10 @@ import androidx.navigation.compose.rememberNavController
 import com.safe_buddy.safebuddy.ui.Routes
 import com.safe_buddy.safebuddy.ui.composables.CircleUrlImage
 import com.safe_buddy.safebuddy.ui.model.BottomNavItem
+import com.safe_buddy.safebuddy.ui.pages.bottom_nav_destinations.HomePage
+import com.safe_buddy.safebuddy.ui.pages.bottom_nav_destinations.MorePage
+import com.safe_buddy.safebuddy.ui.pages.bottom_nav_destinations.PaymentPage
+import com.safe_buddy.safebuddy.ui.pages.bottom_nav_destinations.ShopPage
 import com.safe_buddy.safebuddy.ui.viewmodels.HomeScreenViewModel
 
 @Composable

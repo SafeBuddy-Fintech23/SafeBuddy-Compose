@@ -1,4 +1,4 @@
-package com.safe_buddy.safebuddy.ui.pages
+package com.safe_buddy.safebuddy.ui.pages.bottom_nav_destinations
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun PaymentPage() {
+fun ShopPage() {
     Column(
         Modifier
             .fillMaxSize()
@@ -21,12 +21,12 @@ fun PaymentPage() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "Payment", fontSize = 26.sp)
+        Text(text = "Shop", fontSize = 26.sp)
     }
 }
 
 @Preview
 @Composable
-fun PaymentPagePreview() {
-    PaymentPage()
+fun ShopPagePreview() {
+    ShopPage()
 }
