@@ -24,8 +24,8 @@ import com.safe_buddy.safebuddy.ui.Routes
 import com.safe_buddy.safebuddy.ui.pages.ForgotPasswordPage
 import com.safe_buddy.safebuddy.ui.pages.HomeScreen
 import com.safe_buddy.safebuddy.ui.pages.ProfilePage
-import com.safe_buddy.safebuddy.ui.pages.RegisterPage
-import com.safe_buddy.safebuddy.ui.pages.SignInPage
+import com.safe_buddy.safebuddy.ui.pages.start.RegisterPage
+import com.safe_buddy.safebuddy.ui.pages.start.SignInPage
 import com.safe_buddy.safebuddy.ui.sign_in_with_google.GoogleAuthUiClient
 import com.safe_buddy.safebuddy.ui.theme.SafeBuddyTheme
 import com.safe_buddy.safebuddy.ui.viewmodels.HomeScreenViewModel
@@ -160,23 +160,7 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 navController = navController,
                                 viewModel = viewModel
-                            ) {
-                                lifecycleScope.launch {
-                                    googleAuthUiClient.signOut()
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Signed out",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-
-                                    navController.navigate(Routes.SignInPage.name) {
-                                        launchSingleTop = true
-                                        popUpTo(route = Routes.HomeScreen.name) {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
-                            }
+                            )
                         }
 
                         composable(Routes.ForgotPasswordPage.name) {

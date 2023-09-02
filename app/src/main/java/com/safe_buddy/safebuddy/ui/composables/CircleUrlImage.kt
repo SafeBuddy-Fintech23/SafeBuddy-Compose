@@ -36,8 +36,11 @@ fun CircleUrlImage(
     ) {
 
         val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current).data(imageUrl).crossfade(true)
-                .transformations(CircleCropTransformation()).build()
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .crossfade(true)
+                .transformations(CircleCropTransformation())
+                .build()
         )
 
         if (painter.state is AsyncImagePainter.State.Loading) {

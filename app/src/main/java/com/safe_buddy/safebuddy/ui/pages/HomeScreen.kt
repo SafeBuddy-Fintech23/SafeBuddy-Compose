@@ -46,7 +46,6 @@ import com.safe_buddy.safebuddy.ui.viewmodels.HomeScreenViewModel
 fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeScreenViewModel,
-    onSignOut: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val bottomNavController = rememberNavController()
@@ -149,7 +148,7 @@ fun HomeScreenPreview() {
     HomeScreen(
         navController = rememberNavController(),
         viewModel = viewModel<HomeScreenViewModel>()
-    ) {}
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -174,11 +173,11 @@ fun HomeScreenTopBarPreview() {
         Icon(
             imageVector = Icons.Outlined.AccountCircle, contentDescription = "profile"
         )
-    }, onClickNavigationIcon = {}, actions = {
-        IconButton(onClick = { /*TODO*/ }) {
+    }, onClickNavigationIcon = { }, actions = {
+        IconButton(onClick = { }) {
             Icon(imageVector = Icons.Outlined.ShoppingCart, contentDescription = "options")
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { }) {
             Icon(imageVector = Icons.Outlined.Notifications, contentDescription = "options")
         }
     })

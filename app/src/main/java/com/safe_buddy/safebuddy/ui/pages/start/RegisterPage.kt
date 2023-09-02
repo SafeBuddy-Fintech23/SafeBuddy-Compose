@@ -1,4 +1,4 @@
-package com.safe_buddy.safebuddy.ui.pages
+package com.safe_buddy.safebuddy.ui.pages.start
 
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
