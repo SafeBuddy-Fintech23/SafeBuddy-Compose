@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,11 +21,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,12 +39,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.safe_buddy.safebuddy.R
+import com.safe_buddy.safebuddy.ui.composables.PaymentListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage() {
-    var text by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
+    var text by rememberSaveable { mutableStateOf("") }
+    var active by rememberSaveable { mutableStateOf(false) }
 
     Column(
         Modifier
@@ -60,11 +63,15 @@ fun HomePage() {
             active = active,
             onActiveChange = {
                 active = it
+                text = ""
             },
             placeholder = { Text("Search Payment") },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             trailingIcon = {
-                if (active) {
+                if (active) IconButton(onClick = {
+                    active = false
+
+                }) {
                     Icon(Icons.Default.Clear, contentDescription = "Clear")
                 }
             }
@@ -74,6 +81,14 @@ fun HomePage() {
             }
         }
         CustomVisaCard()
+        Spacer(modifier = Modifier.height(8.dp))
+
+        PaymentListItem()
+        PaymentListItem()
+        PaymentListItem()
+        PaymentListItem()
+        PaymentListItem()
+        PaymentListItem()
 
     }
 }
@@ -90,7 +105,7 @@ fun CustomVisaCard(
     Card(
         modifier = Modifier
             .width(400.dp)
-            .height(260.dp)
+            .height(240.dp)
             .padding(8.dp)
     ) {
         Box {
@@ -115,14 +130,14 @@ fun CustomVisaCard(
                     )
                     Text(
                         text = "Credit Card",
-                        fontSize = 24.sp,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold,
                         fontFamily = FontFamily.Monospace
                     )
                 }
                 Text(
                     text = "3646 5926 5358 6346",
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = FontFamily.Monospace,
                     textAlign = TextAlign.Center,
@@ -142,7 +157,7 @@ fun CustomVisaCard(
                 )
                 Text(
                     text = "username username",
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace,
                     textAlign = TextAlign.Start,
