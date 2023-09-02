@@ -110,7 +110,8 @@ fun HomeScreen(
                 navController = bottomNavController,
                 onItemClick = {
                     bottomNavController.navigate(it.route) {
-                        bottomNavController.popBackStack() // to allow user to close the app on navigating back
+                        popUpTo(navController.graph.startDestinationId)
+                        launchSingleTop = true
                     }
                 }
             )
