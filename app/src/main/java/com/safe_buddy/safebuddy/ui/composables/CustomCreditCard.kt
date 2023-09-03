@@ -25,9 +25,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.safe_buddy.safebuddy.R
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun CustomCreditCard(
+    id: Long = 3646592653586346,
+    balance: Int = 5000,
+    userName: String = "username username"
 ) {
     Card(
         modifier = Modifier
@@ -64,7 +69,7 @@ fun CustomCreditCard(
                     )
                 }
                 Text(
-                    text = "3646 5926 5358 6346",
+                    text = formatLongToSpacedString(id),
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -80,14 +85,14 @@ fun CustomCreditCard(
                     fontFamily = FontFamily.Monospace
                 )
                 Text(
-                    text = "$ 5,000.00",
+                    text = formatIntToDollarCurrency(amount = balance),
                     color = Color.Black,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace
                 )
                 Text(
-                    text = "username username",
+                    text = userName,
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
@@ -113,4 +118,55 @@ fun CustomCreditCard(
 @Composable
 fun CustomCreditCardPreview() {
     CustomCreditCard()
+}
+
+/**
+ * Formats a Long number into a spaced string with groups of four digits from right to left.
+ *
+ * @param input The Long number to be formatted.
+ * @return A String representing the formatted number.
+ */
+fun formatLongToSpacedString(input: Long): String {
+    // Convert the input Long to a String
+    val inputStr = input.toString()
+
+    // Reverse the string to start grouping digits from right to left
+    val reversedStr = inputStr.reversed()
+
+    // a StringBuilder to build the formatted string
+    val formattedStr = StringBuilder()
+
+    // Iterate through each character in the reversed string
+    for (i in reversedStr.indices) {
+        // Add a space every four digits (groups of four)
+        if (i > 0 && i % 4 == 0) {
+            formattedStr.append(' ')
+        }
+
+        // Append the current character to the formatted string
+        formattedStr.append(reversedStr[i])
+    }
+
+    // Reverse the formatted string to the correct order
+    return formattedStr.reverse().toString()
+}
+
+/**
+ * Formats an Integer as a currency in dollars with .00 at the end.
+ *
+ * @param amount The Integer amount in dollars to be formatted.
+ * @return A String representing the formatted currency in dollars with .00 at the end.
+ */
+fun formatIntToDollarCurrency(amount: Int): String {
+    // Create a Locale for the United States (US) to format as dollars
+    val usLocale = Locale("en", "US")
+
+    // Create a NumberFormat instance for currency formatting in dollars
+    val currencyFormat = NumberFormat.getCurrencyInstance(usLocale)
+
+    // Set the minimumFractionDigits to 2 to ensure .00 at the end
+    currencyFormat.minimumFractionDigits = 2
+
+    // Format the Integer amount as currency
+    return currencyFormat.format(amount.toDouble())
 }

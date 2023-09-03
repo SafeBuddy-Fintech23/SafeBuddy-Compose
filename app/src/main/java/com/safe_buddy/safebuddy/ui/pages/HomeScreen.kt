@@ -113,7 +113,7 @@ fun HomeScreen(
                 navController = bottomNavController,
                 onItemClick = {
                     bottomNavController.navigate(it.route) {
-                        popUpTo(navController.graph.startDestinationId)
+                        popUpTo(bottomNavController.graph.startDestinationId)
                         launchSingleTop = true
                     }
                 }
@@ -127,7 +127,7 @@ fun HomeScreen(
         ) {
             NavHost(navController = bottomNavController, startDestination = Routes.HomePage.name) {
                 composable(Routes.HomePage.name) {
-                    HomePage()
+                    HomePage(viewModel = viewModel())
                 }
                 composable(Routes.ShopPage.name) {
                     ShopPage()

@@ -21,9 +21,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
 import com.safe_buddy.safebuddy.ui.Routes
-import com.safe_buddy.safebuddy.ui.pages.ForgotPasswordPage
+import com.safe_buddy.safebuddy.ui.pages.start.ForgotPasswordPage
 import com.safe_buddy.safebuddy.ui.pages.HomeScreen
-import com.safe_buddy.safebuddy.ui.pages.ProfilePage
+import com.safe_buddy.safebuddy.ui.pages.topappbar_destinations.ProfilePage
 import com.safe_buddy.safebuddy.ui.pages.start.RegisterPage
 import com.safe_buddy.safebuddy.ui.pages.start.SignInPage
 import com.safe_buddy.safebuddy.ui.sign_in_with_google.GoogleAuthUiClient

@@ -1,4 +1,4 @@
-package com.safe_buddy.safebuddy.ui.pages
+package com.safe_buddy.safebuddy.ui.pages.topappbar_destinations
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
